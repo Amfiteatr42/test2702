@@ -1,4 +1,5 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { CardContent, CardMedia, Typography } from '@mui/material';
+import { CardStyled, PokemonTitle } from './PokemonDetails.Styled';
 
 export function PokemonDetails({ pokemonInfo }) {
   const { sprites, types, name, abilities } = pokemonInfo;
@@ -12,7 +13,7 @@ export function PokemonDetails({ pokemonInfo }) {
   }
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
+    <CardStyled>
       <CardMedia
         component="img"
         alt={`${name}'s image from the back`}
@@ -20,9 +21,9 @@ export function PokemonDetails({ pokemonInfo }) {
         image={sprites.back_default}
       />
       <CardContent>
-        <Typography gutterBottom variant="h3" component="h2">
+        <PokemonTitle gutterBottom variant="h3" component="h2">
           {name}
-        </Typography>
+        </PokemonTitle>
         <Typography variant="h6" color="text.primary">
           Abilities:{' '}
           <Typography variant="secondary" color="text.secondary">
@@ -36,6 +37,6 @@ export function PokemonDetails({ pokemonInfo }) {
           </Typography>
         </Typography>
       </CardContent>
-    </Card>
+    </CardStyled>
   );
 }

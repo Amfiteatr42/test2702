@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
+import { CardContent, Grid, Button } from '@mui/material';
 import axios from 'axios';
 import { PokemonDetails } from 'components/PokemonDetails/PokemonDetails';
+import {
+  ButtonBox,
+  CardStyled,
+  Container,
+  GridWrapper,
+  InfoTitle,
+} from './PokemonList.Styled';
+import { PokemonTitle } from 'components/PokemonDetails/PokemonDetails.Styled';
 
 axios.defaults.baseURL = 'https://pokeapi.co/api/v2/';
 
@@ -30,46 +38,44 @@ export function PokemonList() {
   }, []);
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: 500, marginRight: 50 }}>
-        <Grid container spacing={3}>
-          {pokemonsData.map(pokemon => (
+    <Container>
+      <GridWrapper>
+        <Grid container spacing={2}>
+          {pokemonsData?.map(pokemon => (
             <Grid item xs={12} sm={6} md={4} key={pokemon.url}>
-              <Card onClick={() => getPokemonInfo(pokemon.url)}>
+              <CardStyled onClick={() => getPokemonInfo(pokemon.url)}>
                 <CardContent>
-                  <Typography variant="h4" component="h2">
+                  <PokemonTitle variant="h4" component="h2">
                     {pokemon.name}
-                  </Typography>
+                  </PokemonTitle>
                 </CardContent>
-              </Card>
+              </CardStyled>
             </Grid>
           ))}
         </Grid>
-        <div
-          style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}
-        >
-          <Button disabled={!prevLink} onClick={() => fetchPokemons(prevLink)}>
+        <ButtonBox>
+          <Button
+            disabled={!prevLink}
+            onClick={() => fetchPokemons(prevLink)}
+            startIcon={<>&#10554;</>}
+          >
             Prev
           </Button>
-          <Button disabled={!nextLink} onClick={() => fetchPokemons(nextLink)}>
+          <Button
+            disabled={!nextLink}
+            onClick={() => fetchPokemons(nextLink)}
+            endIcon={<>&#10555;</>}
+          >
             Next
           </Button>
-        </div>
-      </div>
+        </ButtonBox>
+      </GridWrapper>
 
       {pokemonInfo ? (
         <PokemonDetails pokemonInfo={pokemonInfo} />
       ) : (
-        <h2
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Pick a pokemon to see details
-        </h2>
+        <InfoTitle>Pick a pokemon to see details</InfoTitle>
       )}
-    </div>
+    </Container>
   );
 }
